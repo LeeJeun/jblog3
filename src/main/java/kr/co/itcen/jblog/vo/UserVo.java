@@ -12,6 +12,7 @@ public class UserVo {
 	private String password;
 	private String joinDate;
 
+	
 	public String getId() {
 		return id;
 	}
@@ -39,8 +40,8 @@ public class UserVo {
 	
 	@Override
 	public String toString() {
-		return "UserVo [id=" + id + ", name=" + name + ", password=" + password + ", joinDate=" + joinDate + "]";
-	}	
+		return "UserVo [id=" + id + ", name=" + name + ", password=" + password + ", joinDate="
+				+ joinDate + "]";
+	}
 	
-
 }

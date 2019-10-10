@@ -19,7 +19,6 @@ public class UserController {
 	@RequestMapping("/checkid")
 	public JSONResult checkid(@RequestParam(value="id", required=true, defaultValue="") String id) {
 		
-			System.out.println("id:::::::::::"+id);
 		Boolean exist = userService.existUser(id);
 		return JSONResult.success(exist);
 	}

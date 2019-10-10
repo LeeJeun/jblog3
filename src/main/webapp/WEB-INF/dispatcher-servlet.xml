@@ -39,6 +39,19 @@
 	<!-- 밑의 viewResolver에서 매핑되는 파일이 없을 경우 다른 경로에서 찾아서 매핑해줌 -->
 	<mvc:default-servlet-handler/>
 	
+	<mvc:resources location="file:/uploads/" mapping="/images/**"/>
+	
+	<!-- 멀티파트 리졸버 -->
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 최대업로드 가능한 바이트크기 -->
+		<property name="maxUploadSize" value="52428800" />
+		<!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
+		<!-- property name="maxInMemorySize" value="52428800" /-->
+		<!-- defaultEncoding -->
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>	
+	
 	<!-- Interceptor -->
 	<mvc:interceptors>
 		<mvc:interceptor>

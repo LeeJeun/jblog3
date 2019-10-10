@@ -21,6 +21,17 @@ public class UserDao {
 		return count == 1;	
 	}
 	
+	public Boolean blogInsert(UserVo vo) {
+		vo.setName(vo.getName()+"의 블로그");
+		int count = sqlSession.insert("user.blogInsert", vo);
+		return count == 1;
+	}
+	
+	public Boolean categoryInsert(UserVo vo) {
+		int count = sqlSession.insert("user.categoryInsert", vo);
+		return count == 1;
+	}
+	
 	public Boolean update(UserVo vo) {
 		int count = sqlSession.update("user.update", vo);
 		return count == 1;

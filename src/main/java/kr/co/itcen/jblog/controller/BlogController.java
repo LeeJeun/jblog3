@@ -7,13 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.itcen.jblog.service.BlogService;
 
-
 @Controller
-@RequestMapping( "/{id:(?!assets).*}" )
+@RequestMapping( "/{id:(?!assets|images).*}" )
 public class BlogController {
 	
 	@Autowired
@@ -33,16 +31,11 @@ public class BlogController {
 			postNo = pathNo2.get();
 			categoryNo = pathNo1.get();
 		} else if( pathNo1.isPresent() ){
-			postNo = pathNo1.get();
+			categoryNo = pathNo1.get();
+			//postNo가 null일때 기본값 설정해주기
 		}
 		
 		//modelMap.putAll( blogService.getAll( id, categoryNo, postNo ) );
-		return "blog/index";
-	}
-	
-	@ResponseBody
-	@RequestMapping( "/admin/basic" )
-	public String adminBasic( @PathVariable String id ) {
-		return "id:" + id;
+		return "blog/blog-main";
 	}
 }

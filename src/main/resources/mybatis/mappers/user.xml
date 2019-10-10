@@ -15,6 +15,22 @@
 		</selectKey>
 	</insert>
 	
+	<insert id="blogInsert" parameterType="uservo">
+		<![CDATA[
+		insert
+		  into blog
+		values (#{id }, #{name }, '/jblog3/assets/images/spring-logo.jpg')
+		]]>
+	</insert>
+	
+	<insert id="categoryInsert" parameterType="uservo">
+		<![CDATA[
+		insert
+		  into category
+		values (null, '미분류', '기본카테고리', now(), #{id})
+		]]>
+	</insert>
+	
 	<select id="getByIdAndPassword1" parameterType="uservo" resultType="uservo">
 		<![CDATA[
 		select id, name

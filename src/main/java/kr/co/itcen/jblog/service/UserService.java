@@ -14,6 +14,8 @@ public class UserService {
 
 	public void join(UserVo vo) {
 		userDao.insert(vo);
+		userDao.blogInsert(vo);
+		userDao.categoryInsert(vo);
 	}
 
 	public UserVo getUser(UserVo vo) {
