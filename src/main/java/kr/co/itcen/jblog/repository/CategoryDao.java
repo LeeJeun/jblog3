@@ -19,8 +19,8 @@ public class CategoryDao {
 		return count == 1;
 	}
 	
-	public List<CategoryVo> getList() {
-		List<CategoryVo> result = sqlSession.selectList("category.getList");
+	public List<CategoryVo> getList(String blogId) {
+		List<CategoryVo> result = sqlSession.selectList("category.getList", blogId);
 		return result;
 	}
 	

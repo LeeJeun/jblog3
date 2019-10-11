@@ -42,6 +42,7 @@ $(function(){
 					$("#name").val("");
 					$("#explain").val("");
 					$("#explain").focus();
+					createTable();
 					return;
 				}
 				
@@ -55,28 +56,32 @@ $(function(){
 
 
 function createTable(){
-    
-    var param = {};
-    param.BoardVo.bdId = "01111";
-    param = JSON.stringify(param);
-
+	
     $.ajax({
-        url : "/getBoardList.do",
-        data : param,
-        type : 'post',
-        success : function(data){
-            var results = data.boardList;
-            var str = '<TR>';
-            $.each(results , function(i){
-                str += '<TD>' + results[i].bdTitl + '</TD><TD>' + results[i].bdWriter + '</TD><TD>' + results[i].bdRgDt + '</TD>';
-                str += '</TR>';
-           });
-           $("#boardList").append(str); 
-        },
+        url : "${pageContext.servletContext.contextPath }/api/category/getList",
+        type : 'get',
+        dataType : 'json',
+        success : function(result){
+        	var str="";
+        	$.each(result, function(index, categoryVo){ 
+	            str = "<tr>" +
+	            "<td>" + categoryVo.no + "</td>" +
+	            "<td>" + categoryVo.name + "</td>" +
+	            "<td>" + "JOIN하자" + "</td>" +
+	            "<td>" + categoryVo.contents + "</td>" +
+	            "<td>" +
+	            "<img src='${pageContext.request.contextPath}/assets/images/delete.jpg'" +
+	            "class='delete-img' value='"+ categoryVo.no + "'>" +
+	            "</td>" +
+	            "</tr>";
+	           });
+	           $("#categoryList").append(str);
+        	},
+        
         error : function(){
             alert("error");
         }
-    });
+    })
 }
 
 </script>
@@ -87,7 +92,7 @@ function createTable(){
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<c:import url="/WEB-INF/views/includes/adminHeader.jsp" />
-		      	<table class="admin-cat">
+		      	<table class="admin-cat" id="categoryList">
 		      		<tr>
 		      			<th>번호</th>
 		      			<th>카테고리명</th>
@@ -96,7 +101,7 @@ function createTable(){
 		      			<th>삭제</th>      			
 		      		</tr>
 
-					<c:set var="count" value='${fn:length(list) }' ></c:set>
+					<%-- <c:set var="count" value='${fn:length(list) }' ></c:set>
 					
 					<c:forEach items="${list }" var="vo" varStatus="status">
 							<tr>
@@ -106,7 +111,7 @@ function createTable(){
 								<td>${vo.explain }</td>
 								<td><a href="${pageContext.servletContext.contextPath }/${authUser.id }/admin/category/delete/${vo.no}"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
 							</tr>
-					</c:forEach>					  
+					</c:forEach> --%>					  
 				</table>
       	
       			<h4 class="n-c">새로운 카테고리 추가</h4>

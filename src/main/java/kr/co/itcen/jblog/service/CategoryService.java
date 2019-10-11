@@ -22,8 +22,8 @@ public class CategoryService {
 		return categoryDao.insert(vo);
 	}
 	
-	public List<CategoryVo> list() {
-		return categoryDao.getList();
+	public List<CategoryVo> list(String blogId) {
+		return categoryDao.getList(blogId);
 	}
 
 	public void delete(Long no) {

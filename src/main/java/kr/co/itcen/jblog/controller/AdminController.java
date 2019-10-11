@@ -56,14 +56,14 @@ public class AdminController {
 	//----------------------------------카테고리-----------------------------------
 	@RequestMapping("/category")
 	public String category( @PathVariable("id") String id, Model model) {
-		List<CategoryVo> vo = categoryService.list();
+		List<CategoryVo> vo = categoryService.list(id);
 		model.addAttribute("list", vo);
 		return "blog/blog-admin-category";
 	}
 	
 	@RequestMapping(value="/category/add", method=RequestMethod.POST)
 	public String catAdd(@PathVariable("id") String id, CategoryVo vo) {
-		vo.setUserId(id);
+		vo.setBlogId(id);
 		categoryService.insert(vo);
 		return "redirect:/"+id+"/admin/category";
 	}
@@ -77,7 +77,7 @@ public class AdminController {
 	//----------------------------------글작성-----------------------------------
 	@RequestMapping("/write")
 	public String write( @PathVariable("id") String id, Model model ) {
-		List<CategoryVo> vo = categoryService.list();
+		List<CategoryVo> vo = categoryService.list(id);
 		model.addAttribute("list", vo);
 		return "blog/blog-admin-write";
 	}

@@ -5,7 +5,7 @@ public class CategoryVo {
 	private String name;
 	private String explain;
 	private String regDate;
-	private String userId;
+	private String blogId;
 	
 	public Long getNo() {
 		return no;
@@ -31,18 +31,17 @@ public class CategoryVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public String getUserId() {
-		return userId;
+	public String getBlogId() {
+		return blogId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setBlogId(String blogId) {
+		this.blogId = blogId;
 	}
 	
 	@Override
 	public String toString() {
-		return "CategoryVo [no=" + no + ", name=" + name + ", explain=" + explain + ", regDate=" + regDate + ", userId="
-				+ userId + "]";
+		return "CategoryVo [no=" + no + ", name=" + name + ", explain=" + explain + ", regDate=" + regDate + ", blogId="
+				+ blogId + "]";
 	}
-	
 	
 }

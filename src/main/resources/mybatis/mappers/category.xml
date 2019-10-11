@@ -6,14 +6,15 @@
 		<![CDATA[
 			insert
 			  into category
-			values (null, #{name}, #{explain}, now(), #{userId})
+			values (null, #{name}, #{explain}, now(), #{blogId})
 		]]>
 	</insert>
 
-	<select id="getList" resultType="categoryvo">
+	<select id="getList" parameterType="String" resultType="categoryvo">
 		<![CDATA[
 			select no, name, category.explain
 			  from category
+			 where blog_id = #{blogId}
 	      order by reg_date desc;
 		]]>
 	</select>

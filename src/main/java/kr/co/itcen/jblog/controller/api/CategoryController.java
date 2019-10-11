@@ -1,5 +1,7 @@
 package kr.co.itcen.jblog.controller.api;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,16 @@ public class CategoryController {
 	@RequestMapping("/add")
 	public JSONResult add(@RequestBody CategoryVo vo, HttpSession session) {
 		UserVo userVo = (UserVo)session.getAttribute("authUser");
-		vo.setUserId(userVo.getId());
+		vo.setBlogId(userVo.getId());
 		Boolean exist = categoryService.add(vo);
 		return JSONResult.success(exist);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getList")
+	public List<CategoryVo> getList(HttpSession session) {
+		UserVo userVo = (UserVo)session.getAttribute("authUser");
+		List<CategoryVo> result = categoryService.list(userVo.getId());
+		return result;
 	}
 }
