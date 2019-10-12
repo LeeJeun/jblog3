@@ -12,7 +12,41 @@
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 <script src="${pageContext.servletContext.contextPath }/assets/js/jquery/jquery-1.9.0.js" type="text/javascript"></script>
 <script>
+$(document).ready(function() {
+	createTable();
+});
+
 $(function(){
+	$(document).on('click', '#deleteImg', function(event){
+		var categoryNo = $(this).attr("value");
+		var category = {
+		        "no" : categoryNo
+		}
+		
+		$.ajax({
+			url: "${pageContext.servletContext.contextPath }/api/category/delete/",
+			type: "post",
+			dataType: "json",
+			data: JSON.stringify(category),
+			contentType : "application/json; charset=UTF-8",
+			success: function(response){
+				if(response.result == "fail"){
+					console.error(response.message);
+					return;
+				}
+				
+				if(response.data == true){
+					location.reload();
+					return;
+				}
+				
+			},
+			error: function(xhr, error){
+				console.error("error:" + error);
+			}
+		});
+	});
+	
 	$("#btn-add-cat").click(function(){
 		var name = $("#name").val();
 		var explain = $("#explain").val();
@@ -42,7 +76,7 @@ $(function(){
 					$("#name").val("");
 					$("#explain").val("");
 					$("#explain").focus();
-					createTable();
+					location.reload();
 					return;
 				}
 				
@@ -64,18 +98,18 @@ function createTable(){
         success : function(result){
         	var str="";
         	$.each(result, function(index, categoryVo){ 
-	            str = "<tr>" +
-	            "<td>" + categoryVo.no + "</td>" +
+	            str += "<tr>" +
+	            "<td>" + eval(index+1) + "</td>" +
 	            "<td>" + categoryVo.name + "</td>" +
-	            "<td>" + "JOIN하자" + "</td>" +
-	            "<td>" + categoryVo.contents + "</td>" +
+	            "<td>" + categoryVo.postCount + "</td>" +
+	            "<td>" + categoryVo.explain + "</td>" +
 	            "<td>" +
 	            "<img src='${pageContext.request.contextPath}/assets/images/delete.jpg'" +
-	            "class='delete-img' value='"+ categoryVo.no + "'>" +
+	            "class='delete-img' value='"+ categoryVo.no + "' id='deleteImg'>" +
 	            "</td>" +
 	            "</tr>";
 	           });
-	           $("#categoryList").append(str);
+        	$("#categoryList").append(str);
         	},
         
         error : function(){
@@ -83,6 +117,8 @@ function createTable(){
         }
     })
 }
+
+
 
 </script>
 </head>
@@ -100,22 +136,10 @@ function createTable(){
 		      			<th>설명</th>
 		      			<th>삭제</th>      			
 		      		</tr>
-
-					<%-- <c:set var="count" value='${fn:length(list) }' ></c:set>
-					
-					<c:forEach items="${list }" var="vo" varStatus="status">
-							<tr>
-								<td>[${count - status.index }]</td>
-								<td>${vo.name }</td>
-								<td>join해야돼</td>
-								<td>${vo.explain }</td>
-								<td><a href="${pageContext.servletContext.contextPath }/${authUser.id }/admin/category/delete/${vo.no}"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
-							</tr>
-					</c:forEach> --%>					  
+			  
 				</table>
       	
       			<h4 class="n-c">새로운 카테고리 추가</h4>
-      			<%-- <form action="${pageContext.servletContext.contextPath }/${authUser.id }/admin/category/add" method="post"> --%>
 			      	<table id="admin-cat-add">
 			      		<tr>
 			      			<td class="t">카테고리명</td>
@@ -130,7 +154,6 @@ function createTable(){
 			      			<td><input id="btn-add-cat" type="submit" value="카테고리 추가"></td>
 			      		</tr>      		      		
 			      	</table> 
-		     <%--  	</form> --%>
 			</div>
 		</div>
 		<div id="footer">

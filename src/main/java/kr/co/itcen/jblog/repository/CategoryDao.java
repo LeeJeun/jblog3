@@ -24,7 +24,12 @@ public class CategoryDao {
 		return result;
 	}
 	
-	public void delete(Long no) {
-		sqlSession.delete("category.delete", no);
+	public Long getSelectedCat(String blogId) {
+		return sqlSession.selectOne("category.selectedCat", blogId);
+	}
+	
+	public Boolean delete(Long no) {
+		int count = sqlSession.delete("category.delete", no);
+		return count == 1;
 	}
 }

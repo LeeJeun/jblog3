@@ -19,12 +19,21 @@ public class PostDao {
 		return count == 1;
 	}
 	
-	public List<PostVo> getList() {
-		List<PostVo> result = sqlSession.selectList("post.getList");
+	public List<PostVo> getList(Long categoryNo) {
+		List<PostVo> result = sqlSession.selectList("post.getList", categoryNo);
 		return result;
+	}
+	
+	public Long getSelectedPost(Long categoryNo) {
+		return sqlSession.selectOne("category.selectedPost", categoryNo);
 	}
 	
 	public void delete(Long no) {
 		sqlSession.delete("post.delete", no);
+	}
+
+	public PostVo getView(Long postNo) {
+		PostVo result = sqlSession.selectOne("post.getView", postNo);
+		return result;
 	}
 }

@@ -10,14 +10,47 @@
 		]]>
 	</insert>
 
-	<select id="getList" resultType="postvo">
+	<select id="getList" parameterType="Long" resultType="postvo">
 		<![CDATA[
 			select no, title, contents,
-				   date_format(reg_date, '%Y-%m-%d %h:%i:%s') as regDate,
+				   date_format(reg_date, '%Y/%m/%d') as regDate,
 				   category_no as categoryNo
 			  from post
+		]]> 
+		<choose>
+		    <when test="categoryNo != ''">
+				<![CDATA[
+		               where category_no = #{categoryNo}
+				]]>
+		    </when>
+		    <otherwise>
+		       <![CDATA[
+		               where category_no = (select no from category where blog_id = #{blogId} order by reg_date asc limit 1)
+				]]>
+		    </otherwise>
+  		</choose>
+		<![CDATA[	 
 	      order by reg_date desc;
 		]]>
+	</select>
+	
+	<select id="getView" parameterType="Long" resultType="postvo">
+		<![CDATA[
+			select title, contents
+			  from post
+		]]>
+		<choose>
+		    <when test="postNo != ''">
+				<![CDATA[
+		               where no = #{postNo};
+				]]>
+		    </when>
+		    <otherwise>
+		       <![CDATA[
+		               where no = (select no from post where category_no = (select no from category where blog_id = #{blogId} order by reg_date asc limit 1) order by reg_date desc limit 1)
+				]]>
+		    </otherwise>
+  		</choose>	
 	</select>
 	
 	<delete id="delete" parameterType="Long">

@@ -4,9 +4,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.itcen.jblog.exception.FileuploadException;
@@ -70,6 +72,15 @@ public class BlogService {
 		filename += calendar.get(Calendar.MILLISECOND);
 		filename += ("." + extName);
 		return filename;
+	}
+
+	public ModelMap getAll(String id, Long categoryNo, Long postNo) {
+		ModelMap modelMap = new ModelMap();
+		modelMap.put("blogVo", list(id));
+
+		modelMap.addAllAttributes(blogDao.getAll(id, categoryNo, postNo));
+		
+		return modelMap;
 	}
 
 	

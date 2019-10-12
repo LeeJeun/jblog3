@@ -25,8 +25,12 @@ public class CategoryService {
 	public List<CategoryVo> list(String blogId) {
 		return categoryDao.getList(blogId);
 	}
+	
+	public Long selectedCat(String blogId) {
+		return categoryDao.getSelectedCat(blogId);
+	}
 
-	public void delete(Long no) {
-		categoryDao.delete(no);
+	public Boolean delete(Long no) {
+		return categoryDao.delete(no);
 	}
 }

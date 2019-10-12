@@ -95,6 +95,8 @@ div#content .admin-cat					{ border:none; width:720px; margin-top:30px }
 
 .admin-cat								{ border:1px solid #777; border-collapse:collapse }
 .admin-cat th, .admin-cat td			{ border:1px solid #777; padding:6px }
+.admin-cat delete-img					{ pointer:cursor; position:relative }
+#deleteImg								{ pointer:cursor; position:relative }
 
 .n-c									{ margin-top:30px }
 #admin-cat-add							{ margin-top:10px }

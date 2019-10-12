@@ -38,4 +38,12 @@ public class CategoryController {
 		List<CategoryVo> result = categoryService.list(userVo.getId());
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/delete")
+	public JSONResult delete(@RequestBody CategoryVo vo) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:"+vo.getNo());
+		Boolean exist = categoryService.delete(vo.getNo());
+		return JSONResult.success(exist);
+	}
 }

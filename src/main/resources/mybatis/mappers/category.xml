@@ -12,10 +12,11 @@
 
 	<select id="getList" parameterType="String" resultType="categoryvo">
 		<![CDATA[
-			select no, name, category.explain
-			  from category
-			 where blog_id = #{blogId}
-	      order by reg_date desc;
+		      select c.no, c.name as name, c.explain, count(p.no) as postCount, c.blog_id as blogId
+				from post p	right join category c
+				  on p.category_no = c.no
+			   where c.blog_id = #{blogId}
+			group by c.no;
 		]]>
 	</select>
 	

@@ -18,8 +18,16 @@ public class PostService {
 		postDao.insert(vo);
 	}
 	
-	public List<PostVo> list() {
-		return postDao.getList();
+	public List<PostVo> list(Long categoryNo) {
+		return postDao.getList(categoryNo);
+	}
+	
+	public Long selectedPost(Long categoryNo) {
+		return postDao.getSelectedPost(categoryNo);
+	}
+	
+	public PostVo view(Long postNo) {
+		return postDao.getView(postNo);
 	}
 
 	public void delete(Long no) {
